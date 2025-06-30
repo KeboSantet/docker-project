@@ -1,12 +1,10 @@
 pipeline {
-    agent any
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/KeboSantet/docker-project.git'
-            }
+    agent {
+        docker {
+            image 'node:14'
         }
-
+    }
+    stages {
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -16,14 +14,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'npm test'
-            }
-            post {
-                success {
-                    echo 'Tes berhasil!'
-                }
-                failure {
-                    echo 'Tes gagal!'
-                }
             }
         }
 
