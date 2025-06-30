@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/KeboSantet/docker-project.git'
+                git branch: 'main', url: 'https://github.com/KeboSantet/docker-project.git'
             }
         }
 
