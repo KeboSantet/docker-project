@@ -13,7 +13,7 @@ pipeline {
         stage('Clone Repository') {
 >>>>>>> 049e42a (Initial commit with Jenkinsfile)
             steps {
-                git url: 'https://github.com/nurlayla-06/node-app.git', branch: 'main'
+                git url: git 'https://github.com/KeboSantet/docker-project.git', branch: 'main'
             }
         }
 
