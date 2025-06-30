@@ -1,10 +1,12 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:14'
-        }
-    }
+    agent any
     stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/KeboSantet/docker-project'
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -14,6 +16,14 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'npm test'
+            }
+            post {
+                success {
+                    echo 'Tes berhasil!'
+                }
+                failure {
+                    echo 'Tes gagal!'
+                }
             }
         }
 
