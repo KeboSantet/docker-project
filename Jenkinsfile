@@ -1,11 +1,15 @@
 pipeline {
     agent {
-        docker {
-            image 'node:14'
-        }
+        docker { image 'node:18' } // Menggunakan image Node.js versi 18
     }
 
     stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/KeboSantet/docker-project.git', branch: 'main'
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -16,12 +20,20 @@ pipeline {
             steps {
                 sh 'npm test'
             }
+            post {
+                success {
+                    echo 'Tes berhasil!'
+                }
+                failure {
+                    echo 'Tes gagal!'
+                }
+            }
         }
 
         stage('Deploy') {
             steps {
-                sh 'echo "Menjalankan aplikasi..."'
-                sh 'node app.js &'
+                echo 'Menjalankan aplikasi...'
+                sh 'nohup node app.js &'
             }
         }
     }
